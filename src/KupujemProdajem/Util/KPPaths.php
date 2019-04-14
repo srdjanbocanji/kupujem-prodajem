@@ -15,4 +15,6 @@ final class KPPaths
     const LOGOUT = "/user.php?action=logout";
 
     const STORE_PHOTO = "/file.php?action=ajax_upload";
+
+    const WELCOME_PAGE = "/user.php?action=welcome";
 }

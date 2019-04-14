@@ -9,6 +9,7 @@ use KupujemProdajem\Factory\FormFactoryInterface;
 use KupujemProdajem\Form\FormInterface;
 use KupujemProdajem\Form\NewAdForm;
 use KupujemProdajem\Form\NewLoginForm;
+use KupujemProdajem\Util\AuthorizationException;
 use KupujemProdajem\Util\FormMethod;
 use KupujemProdajem\Util\KPPaths;
 
@@ -23,8 +24,10 @@ class KPClient implements KPClientInterface
     /** @var FormFactoryInterface */
     private $formFactory;
 
+    /** @var bool  */
     private $loggedIn = false;
 
+    /** @var int  */
     private static $pictureUploadIndex = 0;
 
     public function __construct()
@@ -37,11 +40,30 @@ class KPClient implements KPClientInterface
     public function login($username, $password)
     {
         $this->submitForm($this->createNewLoginForm($username, $password));
-        $this->loggedIn = true;
+
+        if($this->curl->getInfo(CURLINFO_EFFECTIVE_URL) == $this->resolveUrl(KPPaths::WELCOME_PAGE)) {
+            $this->loggedIn = true;
+        }
+
+    }
+
+    public function logout()
+    {
+        $this->curl->setOpt(CURLOPT_POST, FormMethod::GET);
+        $this->curl->setOpt(CURLOPT_URL, $this->resolveUrl(KPPaths::LOGOUT));
+        $this->curl->exec();
+
+        $this->loggedIn = false;
     }
 
     public function createNewAdForm(): NewAdForm
     {
+
+        $this->assertUserIsLoggedIn();
+
+        echo "user is lgd";
+        die;
+
         $token = $this->retrieveCSRFToken();
 
         static::$pictureUploadIndex = 0;
@@ -122,6 +144,13 @@ class KPClient implements KPClientInterface
         }
 
         return $pictures;
+    }
+
+    private function assertUserIsLoggedIn()
+    {
+        if(!$this->loggedIn) {
+            throw new AuthorizationException("User must be logged in!");
+        }
     }
 
 
