@@ -1,0 +1,33 @@
+{
+  "name": "KP Ad Importer",
+  "description": "Kupujem-prodajem ad importer",
+  "keywords": ["kupujemprodajem", "ads"],
+  "license": "MIT",
+  "homepage": "https://gulbox.rs/",
+  "support": {
+    "issues": "https://github.com/",
+    "source": "https://github.com/"
+  },
+  "authors": [
+    {
+      "name": "Srdjan Bocanji",
+      "email": "bocanji.s@gulbox.rs"
+    }
+  ],
+  "require":{
+      "php-curl-class/php-curl-class": "8.5.0"
+  },
+  "recommend":{
+    "ext-curl": "*"
+  },
+  "autoload":{
+    "psr-4": {
+      "KupujemProdajem\\": "src/KupujemProdajem/"
+    }
+  },
+  "bin":["bin"],
+  "config":{
+    "vendor-dir":"vendor"
+  }
+
+}
