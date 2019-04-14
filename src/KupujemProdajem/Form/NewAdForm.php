@@ -71,7 +71,11 @@ class NewAdForm extends Form
             $data += $this->addAdditionalGoodsData();
         }
 
+        var_dump($data);
+
         return $data;
+
+
 
     }
 
@@ -107,11 +111,12 @@ class NewAdForm extends Form
             'submit[post]' => $this->submit
         ];
 
-        $i = 1;
+
         foreach($this->ad->getPictures() as $picture) {
-            $data['photo_num'.$i] = $picture->getPhotoNum();
-            $data['photo_path'.$i] = $picture->getPhotoPath();
-            $data['file_name'.$i] = $picture->getFileName();
+            $i = $picture->getPhotoNum();
+            $data['data[photo_num'.$i.']'] = $picture->getPhotoNum();
+            $data['data[photo_path'.$i.']'] = $picture->getPhotoPath();
+            $data['data[file_name'.$i.']'] = $picture->getFileName();
         }
 
         return $data;
@@ -144,5 +149,55 @@ class NewAdForm extends Form
     {
         return $this->token;
     }
+
+    /**
+     * @return CompanyInfo|UserInfo
+     */
+    public function getUserInfo()
+    {
+        return $this->userInfo;
+    }
+
+    /**
+     * @param CompanyInfo|UserInfo $userInfo
+     */
+    public function setUserInfo($userInfo)
+    {
+        $this->userInfo = $userInfo;
+    }
+
+    /**
+     * @return AdPersonalInfo
+     */
+    public function getAdPersonalInfo()
+    {
+        return $this->adPersonalInfo;
+    }
+
+    /**
+     * @param AdPersonalInfo $adPersonalInfo
+     */
+    public function setAdPersonalInfo($adPersonalInfo)
+    {
+        $this->adPersonalInfo = $adPersonalInfo;
+    }
+
+    /**
+     * @return Goods|Service
+     */
+    public function getAd()
+    {
+        return $this->ad;
+    }
+
+    /**
+     * @param Goods|Service $ad
+     */
+    public function setAd($ad)
+    {
+        $this->ad = $ad;
+    }
+
+
 
 }

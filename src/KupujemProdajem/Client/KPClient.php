@@ -3,6 +3,7 @@
 namespace KupujemProdajem\Client;
 
 use Curl\Curl;
+use KupujemProdajem\Entity\Picture;
 use KupujemProdajem\Factory\FormFactory;
 use KupujemProdajem\Factory\FormFactoryInterface;
 use KupujemProdajem\Form\FormInterface;
@@ -24,6 +25,8 @@ class KPClient implements KPClientInterface
 
     private $loggedIn = false;
 
+    private static $pictureUploadIndex = 0;
+
     public function __construct()
     {
         $this->initializeCurl();
@@ -40,6 +43,8 @@ class KPClient implements KPClientInterface
     public function createNewAdForm(): NewAdForm
     {
         $token = $this->retrieveCSRFToken();
+
+        static::$pictureUploadIndex = 0;
 
         return $this->formFactory->createNewAdForm($token);
     }
@@ -58,7 +63,9 @@ class KPClient implements KPClientInterface
             $this->curl->setOpt(CURLOPT_POSTFIELDS, $form->getData());
         }
 
-        $this->curl->exec();
+       return $this->curl->exec();
+
+
     }
 
     private function retrieveCSRFToken()
@@ -90,6 +97,31 @@ class KPClient implements KPClientInterface
     private function initializeFormFactory()
     {
         $this->formFactory = new FormFactory();
+    }
+
+    /**
+     * @param array $picturePaths
+     * @return Picture[]
+     */
+    public function uploadPictures(array $picturePaths)
+    {
+
+        $pictures = [];
+
+        for($i = static::$pictureUploadIndex;$i<count($picturePaths) + static::$pictureUploadIndex;$i++) {
+
+            $jsonResponse = $this->submitForm($this->formFactory->createNewPhotoForm($picturePaths[$i]));
+            $jsonResponse = json_decode($jsonResponse, true);
+            var_dump($jsonResponse);
+            $picture = new Picture();
+            $picture->setFileName($jsonResponse['file_name']);
+            $picture->setPhotoNum($i + 1);
+            $picture->setPhotoPath($jsonResponse['file_path']);
+            $pictures[] = $picture;
+
+        }
+
+        return $pictures;
     }
 
 
