@@ -1,12 +1,12 @@
 {
-  "name": "KP Ad Importer",
+  "name": "srdjanbocanji/kupujem-prodajem",
   "description": "Kupujem-prodajem ad importer",
   "keywords": ["kupujemprodajem", "ads"],
   "license": "MIT",
   "homepage": "https://gulbox.rs/",
   "support": {
-    "issues": "https://github.com/",
-    "source": "https://github.com/"
+    "issues": "https://github.com/srdjanbocanji/kupujem-prodajem/issues",
+    "source": "https://github.com/srdjanbocanji/kupujem-prodajem"
   },
   "authors": [
     {
