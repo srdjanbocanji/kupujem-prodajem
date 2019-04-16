@@ -30,7 +30,7 @@ class NewAdForm extends Form
     /**
      * @var boolean
      */
-    private $kpizlog;
+    private $kpizlog = 'yes';
 
     /** @var string  */
     private $swear = 'yes';
@@ -71,7 +71,6 @@ class NewAdForm extends Form
             $data += $this->addAdditionalGoodsData();
         }
 
-        var_dump($data);
 
         return $data;
 

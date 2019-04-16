@@ -61,9 +61,6 @@ class KPClient implements KPClientInterface
 
         $this->assertUserIsLoggedIn();
 
-        echo "user is lgd";
-        die;
-
         $token = $this->retrieveCSRFToken();
 
         static::$pictureUploadIndex = 0;
