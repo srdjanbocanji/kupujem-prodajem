@@ -21,6 +21,8 @@ class KPClient implements KPClientInterface
     /** @var string */
     private $baseUrl = 'https://www.kupujemprodajem.com';
 
+    private $kpIzlogUrl = 'https://{user-id}.kpizlog.rs/index.php?action=search&data%5Bper_page%5D=48&data%5Bpage%5D={page}';
+
     /** @var FormFactoryInterface */
     private $formFactory;
 
@@ -131,7 +133,6 @@ class KPClient implements KPClientInterface
 
             $jsonResponse = $this->submitForm($this->formFactory->createNewPhotoForm($picturePaths[$i]));
             $jsonResponse = json_decode($jsonResponse, true);
-            var_dump($jsonResponse);
             $picture = new Picture();
             $picture->setFileName($jsonResponse['file_name']);
             $picture->setPhotoNum($i + 1);
@@ -148,6 +149,46 @@ class KPClient implements KPClientInterface
         if(!$this->loggedIn) {
             throw new AuthorizationException("User must be logged in!");
         }
+    }
+
+    public function getFormFactory()
+    {
+        return $this->formFactory;
+    }
+
+    public function searchKPIzlog($id)
+    {
+        $result = [];
+        $page = 1;
+        $url = str_replace("{user-id}", $id, $this->kpIzlogUrl);
+        $maxPage = 1;
+        while(true) {
+
+            $currentUrl = str_replace('{page}', $page, $url);
+
+            if($page > $maxPage) {
+                break;
+            }
+            echo "Retrieving from -".$currentUrl.PHP_EOL;
+            $response = $this->curl->get($currentUrl);
+            if($page == 1) {
+                preg_match("/... <a(.*)class=\"page\">(.*)/", $response, $matchMaxPage);
+                $maxPage =  count($matchMaxPage) > 0 ? $matchMaxPage[2] : $maxPage;
+
+            }
+
+            unset($matches);
+            preg_match_all('/<a href=(.*)-(.*)-oglas.htm/', $response,$matches);
+
+            foreach($matches[2] as $id) {
+                $result[] = $id;
+            }
+
+            $page++;
+        }
+
+        return $result;
+
     }
 
 

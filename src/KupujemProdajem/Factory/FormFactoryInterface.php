@@ -9,4 +9,6 @@ interface FormFactoryInterface
     public function createNewLoginForm($username, $password);
 
     public function createNewPhotoForm($photoPath);
+
+    public function createNewDeleteAdForm();
 }

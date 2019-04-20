@@ -3,3 +3,4 @@
 .idea/
 workarea/
 vendor/
+composer.lock

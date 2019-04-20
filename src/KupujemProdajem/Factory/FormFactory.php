@@ -2,6 +2,7 @@
 
 namespace KupujemProdajem\Factory;
 
+use KupujemProdajem\Form\DeleteAdForm;
 use KupujemProdajem\Form\NewAdForm;
 use KupujemProdajem\Form\NewLoginForm;
 use KupujemProdajem\Form\NewPhotoForm;
@@ -21,6 +22,11 @@ class FormFactory implements FormFactoryInterface
     public function createNewPhotoForm($photoPath)
     {
         return new NewPhotoForm($photoPath);
+    }
+
+    public function createNewDeleteAdForm()
+    {
+        return new DeleteAdForm();
     }
 
 

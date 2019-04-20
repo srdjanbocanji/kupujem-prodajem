@@ -15,11 +15,11 @@
     }
   ],
   "require":{
+      "ext-curl": "*",
       "php-curl-class/php-curl-class": "8.5.0"
+
   },
-  "recommend":{
-    "ext-curl": "*"
-  },
+
   "autoload":{
     "psr-4": {
       "KupujemProdajem\\": "src/KupujemProdajem/"
