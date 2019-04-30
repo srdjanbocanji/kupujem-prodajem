@@ -16,7 +16,7 @@ class NewPhotoForm extends Form
 
     public function __construct($photoPath)
     {
-        if(!file_exists($photoPath)) {
+        if($photoPath !== null && !file_exists($photoPath)) {
             throw new \InvalidArgumentException("Invalid path: ".$photoPath);
         }
 
@@ -45,6 +45,9 @@ class NewPhotoForm extends Form
      */
     public function setPhotoPath($photoPath)
     {
+        if(!file_exists($photoPath)) {
+            throw new \InvalidArgumentException("Invalid path: ".$photoPath);
+        }
         $this->photoPath = $photoPath;
     }
 

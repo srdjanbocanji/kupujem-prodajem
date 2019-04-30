@@ -2,13 +2,46 @@
 
 namespace KupujemProdajem\Factory;
 
+use KupujemProdajem\Form\DeleteAdForm;
+use KupujemProdajem\Form\NewAdForm;
+use KupujemProdajem\Form\NewLoginForm;
+use KupujemProdajem\Form\NewPhotoForm;
+
+/**
+ * Form factory interface.
+ *
+ * Interface FormFactoryInterface
+ * @package KupujemProdajem\Factory
+ */
 interface FormFactoryInterface
 {
-    public function createNewAdForm($token);
+    /**
+     * Creates new ad form.
+     *
+     * @param $token
+     * @return NewAdForm
+     */
+    public function createNewAdForm($token): NewAdForm;
 
-    public function createNewLoginForm($username, $password);
+    /**
+     * Creates new login form.
+     *
+     * @return NewLoginForm
+     */
+    public function createNewLoginForm(): NewLoginForm;
 
-    public function createNewPhotoForm($photoPath);
+    /**
+     * Creates new photo form.
+     *
+     * @param null $photoPath
+     * @return NewPhotoForm
+     */
+    public function createNewPhotoForm($photoPath = null): NewPhotoForm;
 
-    public function createNewDeleteAdForm();
+    /**
+     * Creates new delete add form.
+     *
+     * @return DeleteAdForm
+     */
+    public function createNewDeleteAdForm(): DeleteAdForm;
 }

@@ -16,6 +16,7 @@
   ],
   "require":{
       "ext-curl": "*",
+      "ext-json": "*",
       "php-curl-class/php-curl-class": "8.5.0"
 
   },
