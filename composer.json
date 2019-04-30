@@ -1,6 +1,6 @@
 {
   "name": "srdjanbocanji/kupujem-prodajem",
-  "description": "Kupujem-prodajem ad importer",
+  "description": "Kupujem Prodajem client for creating, searching and deleting ads using curl\n",
   "keywords": ["kupujemprodajem", "ads"],
   "license": "MIT",
   "homepage": "https://gulbox.rs/",
