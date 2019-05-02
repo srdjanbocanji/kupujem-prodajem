@@ -54,6 +54,7 @@ class KPClient implements KPClientInterface
         $form->setPassword($password);
         $this->submitForm($form);
 
+
         if($this->curl->getInfo(CURLINFO_EFFECTIVE_URL) == $this->resolveUrl(KPPaths::WELCOME_PAGE)) {
             $this->loggedIn = true;
         }
@@ -95,8 +96,7 @@ class KPClient implements KPClientInterface
             $this->curl->setOpt(CURLOPT_POSTFIELDS, $form->getData());
         }
 
-       return $this->curl->exec();
-
+        $this->curl->exec();
 
     }
 
